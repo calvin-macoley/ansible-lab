@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to {{ inventory_hostname }}</title>
+</head>
+<body>
+    <h1>Welcome to {{ inventory_hostname }}</h1>
+    <p>Environment: {{ environment | default('development') }}</p>
+    <p>Deploy date: {{ ansible_date_time.date }}</p>
+    <p>Web server: {{ webserver_type | default('Apache') }}</p>
+</body>
+</html>

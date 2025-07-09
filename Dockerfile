@@ -11,14 +11,6 @@ RUN mkdir -p /var/run/sshd && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 
-# Create startup script to run both services
-RUN echo '#!/bin/bash\n\
-# Start SSH daemon in background\n\
-/usr/sbin/sshd -D &\n\
-\n\
-# Start Apache in foreground\n\
-httpd-foreground' > /start.\chmod +x /start.sh
-
 EXPOSE 80
 EXPOSE 22
 

@@ -23,8 +23,8 @@
         append: yes
         comment: "Admin user"
 
-    - name: Set timezone to Paris
-      become: true
-      community.general.timezone:
-        name: Europe/Paris
-      #notify: restart rsyslog
+    #- name: Set timezone to Paris
+    #  become: true
+    #  community.general.timezone:
+    #    name: Europe/Paris
+    #  #notify: restart rsyslog

@@ -1,0 +1,33 @@
+---
+- name: Application deployment # Start new play
+  hosts: all # Play will run on all hosts defined in the inventory
+  become: true # Run the tasks with sudo/root
+  vars:
+  tasks:
+    - name: Main directory creation
+      ansible.builtin.file:
+        path: /var/www/myapp/
+        state: directory
+        mode:  0755
+        owner: www-data
+        group: www-data
+
+    - name: Create subdirectories
+      ansible.builtin.file:
+        path: /var/www/myapp/{{ item }}
+        state: directory
+        mode:  0755
+        owner: www-data
+        group: www-data
+      loop:
+      - html
+      - logs
+      - config
+    
+    - name: Copy files from files folder
+      ansible.builtin.copy:
+        src: ./files/infos.php
+        dest: /var/www/myapp/
+        mode: 0644
+        owner: root
+        group: www-data

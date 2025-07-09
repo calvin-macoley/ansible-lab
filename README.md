@@ -47,9 +47,20 @@ ansible all -m ping
 ```
 The result:
 ```
+[WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+web2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[WARNING]: Platform linux on host web1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
 web1 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3.11"
+        "discovered_interpreter_python": "/usr/bin/python3.12"
     },
     "changed": false,
     "ping": "pong"
@@ -57,5 +68,29 @@ web1 | SUCCESS => {
 ```
 
 ### Task 2:  Utilities playbook creation
-### Task 2:  Web servers playbook installation
-### Task 2:  App playbook deployment
+To execute and install all utilities make sure that you are in the project folder and use:
+
+```
+ansible-playbook playbooks/system-prep.yml
+```
+
+### Task 3:  Web servers playbook installation
+Now we need to install our Apache server by using the next command:
+```
+ansible-playbook playbooks/webserver.yml
+```
+
+### Task 4:  App playbook deployment ***(TODO)***
+Here we need to create this folder structure:
+
+```
+/var/www/myapp/
+├── html/
+├── logs/
+└── config/
+```
+
+To do so, execute the following command:
+```
+ansible-playbook playbooks/deploy-app.yml
+```
