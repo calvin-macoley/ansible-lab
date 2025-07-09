@@ -1,7 +1,7 @@
-FROM httpd:latest
+FROM ubuntu:latest
 USER root
 # -y to avoid interactive cli
-RUN apt-get update && apt-get install openssh-server -y
+RUN apt-get update && apt-get install -y openssh-server && apt-get install -y python3 && apt-get install -y python3-apt
 
 # Create SSH host keys and configure SSH
 RUN mkdir -p /var/run/sshd && \
@@ -17,9 +17,9 @@ RUN echo '#!/bin/bash\n\
 /usr/sbin/sshd -D &\n\
 \n\
 # Start Apache in foreground\n\
-httpd-foreground' > /start.sh && \
-    chmod +x /start.sh
+httpd-foreground' > /start.\chmod +x /start.sh
 
 EXPOSE 80
 EXPOSE 22
-CMD ["/start.sh"]
+
+CMD ["/usr/sbin/sshd", "-D"]

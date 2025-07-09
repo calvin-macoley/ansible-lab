@@ -17,14 +17,11 @@ pwd
 docker build --tag ansible-lab:latest .
 
 # Create the two containers
-docker run -d --name web1 -p 8081:80 ansible-lab:latest
-docker run -d --name web2 -p 8082:80 ansible-lab:latest
+docker run -d --name web1 -p 8081:80 -p 2221:22 ansible-lab:latest
+docker run -d --name web2 -p 8082:80 -p 2222:22 ansible-lab:latest
 
 # Insure that our two containers are created
 docker ps
-
-# Make sure httpd is launched on each containers
-docker exec <container_name> ps aux | grep httpd
 ```
 
 ## Task setup
@@ -42,6 +39,21 @@ ansible-lab/
 ├── host_vars/
 ├── files/
 └── templates/
+```
+
+When ansible.cfg and inventory.ini are created. Test it via this command:
+```
+ansible all -m ping
+```
+The result:
+```
+web1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.11"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 ```
 
 ### Task 2:  Utilities playbook creation

@@ -1,0 +1,30 @@
+---
+- name: System preparation # Start new play
+  hosts: all # Play will run on all hosts defined in the inventory
+  become: true # Run the tasks with sudo/root
+  tasks:
+    - name: Install vim
+      apt: # Use the apt module
+        name: # package to install
+          - vim
+          - git
+          - curl
+          - wget
+        state: present # check if already installed, if yes Ansible does nothing
+        update_cache: yes # equivalent to run apt update command
+
+    - name: Create system admin user
+      user:
+        name: webadmin
+        system: yes
+        shell: /bin/bash
+        create_home: yes
+        groups: sudo
+        append: yes
+        comment: "Admin user"
+
+    - name: Set timezone to Paris
+      become: true
+      community.general.timezone:
+        name: Europe/Paris
+      #notify: restart rsyslog

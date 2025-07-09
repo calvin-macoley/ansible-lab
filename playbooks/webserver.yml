@@ -1,0 +1,25 @@
+---
+- name: System preparation # Start new play
+  hosts: all # Play will run on all hosts defined in the inventory
+  become: true # Run the tasks with sudo/root
+  tasks:
+    - name: Install apache2
+      apt: # Use the apt module
+        name: 
+          - apache2 # package to install
+          - apache2-utils
+        state: present # check if already installed, if yes Ansible does nothing
+        update_cache: yes # equivalent to run apt update command
+    
+    - name: enable mod_rewrite
+      apache2_module:
+        name: rewrite
+        state: present
+      notify:
+        - restart apache2
+
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
