@@ -8,17 +8,17 @@
       ansible.builtin.file:
         path: /var/www/myapp/
         state: directory
-        mode:  0755
-        owner: www-data
-        group: www-data
+        mode:  "{{ mode }}"
+        owner: "{{ owner }}"
+        group: "{{ group }}"
 
     - name: Create subdirectories
       ansible.builtin.file:
         path: /var/www/myapp/{{ item }}
         state: directory
-        mode:  0755
-        owner: www-data
-        group: www-data
+        mode:  "{{ mode }}"
+        owner: "{{ owner }}"
+        group: "{{ group }}"
       loop:
       - html
       - logs
@@ -29,5 +29,5 @@
         src: ./files/infos.php
         dest: /var/www/myapp/
         mode: 0644
-        owner: root
-        group: www-data
+        owner: "{{ owner }}"
+        group: "{{ group }}"
