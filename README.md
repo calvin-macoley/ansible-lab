@@ -14,7 +14,7 @@ In a CLI launch those commands to setup the lab:
 pwd
 
 # Create the image based on the Dockerfile
-docker build --tag ansible-lab:latest .
+docker build --tag ansible-lab:latest -f Dockerfile .
 
 # Create the two containers
 docker run -d --name web1 -p 8081:80 -p 2221:22 ansible-lab:latest
@@ -67,30 +67,26 @@ web1 | SUCCESS => {
 }
 ```
 
-### Task 2:  Utilities playbook creation
-To execute and install all utilities make sure that you are in the project folder and use:
+### Task 2: Deployment
+Now that everything is set up and tested, we can deploy our environments by runnning the following command:
 
 ```
-ansible-playbook playbooks/system-prep.yml
+ansible-playbook playbooks/site.yml
 ```
 
-### Task 3:  Web servers playbook installation
-Now we need to install our Apache server by using the next command:
+If everything is correctly you should see no failures in the play recap:
+
+![alt text](screenshots/play_recap.png)
+
+Next, navigate to the following URLs:
 ```
-ansible-playbook playbooks/webserver.yml
+http://localhost:8081/
+http://localhost:8082/
 ```
 
-### Task 4:  App playbook deployment ***(TODO)***
-Here we need to create this folder structure:
+Here are the screens of you deployed websites:
+<div style="display: flex; gap: 10px;">
+  <img src="screenshots/web1.png" alt="Website 1" style="width: 49%;">
+  <img src="screenshots/web2.png" alt="Website 2" style="width: 49%;">
+</div>
 
-```
-/var/www/myapp/
-├── html/
-├── logs/
-└── config/
-```
-
-To do so, execute the following command:
-```
-ansible-playbook playbooks/deploy-app.yml
-```

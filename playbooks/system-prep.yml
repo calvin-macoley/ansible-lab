@@ -3,7 +3,7 @@
   hosts: all # Play will run on all hosts defined in the inventory
   become: true # Run the tasks with sudo/root
   tasks:
-    - name: Install vim
+    - name: Install utilities on Debian based OS
       apt: # Use the apt module
         name: # package to install
           - vim
@@ -12,6 +12,7 @@
           - wget
         state: present # check if already installed, if yes Ansible does nothing
         update_cache: yes # equivalent to run apt update command
+      when: ansible_os_family == "Debian"
 
     - name: Create system admin user
       user:
