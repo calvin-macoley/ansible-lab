@@ -1,8 +1,8 @@
 ---
 - name: Application deployment # Start new play
   hosts: all # Play will run on all hosts defined in the inventory
+  gather_facts: yes
   become: true # Run the tasks with sudo/root
-  vars:
   tasks:
     - name: Main directory creation
       ansible.builtin.file:
@@ -11,6 +11,7 @@
         mode:  "{{ mode }}"
         owner: "{{ owner }}"
         group: "{{ group }}"
+      
 
     - name: Create subdirectories
       ansible.builtin.file:
@@ -25,9 +26,32 @@
       - config
     
     - name: Copy files from files folder
-      ansible.builtin.copy:
-        src: ./files/infos.php
-        dest: /var/www/myapp/
+      ansible.builtin.template:
+        src: ../templates/index.php.j2
+        dest: /var/www/myapp/html/index.php
         mode: 0644
         owner: "{{ owner }}"
         group: "{{ group }}"
+      notify: Reload Apache
+    
+    # This less robust
+    #- name: Update Apache conf file
+    #  ansible.builtin.lineinfile:
+    #    path: /etc/apache2/sites-available/000-default.conf
+    #    search_string: DocumentRoot /var/www/html
+    #    line: DocumentRoot /var/www/myapp/html
+    #   notify: Reload Apache 
+
+    - name: Update Apache DocumentRoot to new app directory
+      ansible.builtin.lineinfile:
+        path: "{{ conf_apache_path }}"
+        regexp: '^(\s*)DocumentRoot\s+.*'
+        line: '    DocumentRoot /var/www/myapp/html'
+        backup: true
+      notify: Reload Apache
+      
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded

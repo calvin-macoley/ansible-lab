@@ -5,8 +5,16 @@
 </head>
 <body>
     <h1>Welcome to {{ inventory_hostname }}</h1>
-    <p>Environment: {{ environment | default('development') }}</p>
     <p>Deploy date: {{ ansible_date_time.date }}</p>
     <p>Web server: {{ webserver_type | default('Apache') }}</p>
+
+    <hr>
+
+    <?php
+    echo "<h2>Server Information</h2>";
+    echo "<p>Server: " . $_SERVER['SERVER_NAME'] . "</p>";
+    echo "<p>Time: " . date('Y-m-d H:i:s') . "</p>";
+    echo "<p>PHP Version: " . phpversion() . "</p>";
+    ?>
 </body>
 </html>
