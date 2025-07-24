@@ -1,0 +1,23 @@
+---
+- name: Install Apache2 on Debian based OS
+  apt: # Use the apt module
+    name:
+      - apache2 # package to install
+      - apache2-utils
+      - php
+      - libapache2-mod-php
+    state: present # check if already installed, if yes Ansible does nothing
+    update_cache: yes # equivalent to run apt update command
+  when: ansible_os_family == "Debian"
+
+- name: enable mod_rewrite
+  apache2_module:
+    name: rewrite
+    state: present
+  notify:
+    - restart apache2
+
+- name: boot apache2 when server starts
+  command: 'update-rc.d apache2 defaults'
+  notify:
+    - restart apache2

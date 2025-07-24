@@ -71,8 +71,9 @@ web1 | SUCCESS => {
 Now that everything is set up and tested, we can deploy our environments by runnning the following command:
 
 ```
-ansible-playbook playbooks/site.yml
+ansible-playbook playbooks/site.yml 
 ```
+*<ins>NB.</ins>: use the --check option to lauch a Dry Run of the playbook*
 
 If everything is correctly you should see no failures in the play recap:
 
@@ -90,3 +91,17 @@ Here are the screens of you deployed websites:
   <img src="screenshots/web2.png" alt="Website 2" style="width: 49%;">
 </div>
 
+### Memento
+
+Roles are a way to organize and package related tasks, variables, files, templates and handlers into a reusable structured format. Roles promote code reusability and make playbooks cleaner by grouping related automation logic together.
+
+To create a role:
+
+```
+ansible-galaxy init <name>
+```
+
+OR
+
+```
+```

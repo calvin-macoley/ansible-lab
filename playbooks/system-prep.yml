@@ -16,7 +16,7 @@
 
     - name: Create system admin user
       user:
-        name: webadmin
+        name: "{{ user }}"
         system: yes
         shell: /bin/bash
         create_home: yes
