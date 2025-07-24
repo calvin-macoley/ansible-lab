@@ -45,6 +45,11 @@ When ansible.cfg and inventory.ini are created. Test it via this command:
 ```
 ansible all -m ping
 ```
+*<ins>NB.</ins>: if you are running this command on MacOS be sure to install sshpass before ([link to Homebrew](https://brew.sh/)).*
+```
+brew install hudochenkov/sshpass/sshpass
+```
+
 The result:
 ```
 [WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
@@ -99,9 +104,4 @@ To create a role:
 
 ```
 ansible-galaxy init <name>
-```
-
-OR
-
-```
 ```
