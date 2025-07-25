@@ -10,12 +10,23 @@
     update_cache: yes # equivalent to run apt update command
   when: ansible_os_family == "Debian"
 
-- name: enable mod_rewrite
-  apache2_module:
-    name: rewrite
-    state: present
-  notify:
-    - restart apache2
+- name: Start Apache2 service if not started
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+#- name: enable mod_rewrite
+#  apache2_module:
+#    name: rewrite
+#    state: present
+#  notify:
+#    - restart apache2
+
+- name: Enable mod_rewrite
+  service:
+    name: apache2
+    state: restarted
 
 - name: boot apache2 when server starts
   command: 'update-rc.d apache2 defaults'
