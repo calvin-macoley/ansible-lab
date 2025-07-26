@@ -41,6 +41,24 @@ ansible-lab/
 └── templates/
 ```
 
+Here I encrypted my inventory.ini file so, I'll invite you to create your own inventory if you want to use this project (do not forget to change the ansible.cfg at line 3). Here is an example:
+
+```
+[webservers]
+web1 ansible_host=<change_host> ansible_port=<change_port>
+web2 ansible_host=<change_host>  ansible_port=<change_port>
+
+# Conf in case you want to use an ubuntu EC2 instance
+web3 ansible_host=<change_host>  ansible_ssh_private_key_file=.<put_you_pem_path_here> ansible_user=ubuntu
+
+[databases]
+[webservers:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_password=<your_password>
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+
 When ansible.cfg and inventory.ini are created. Test it via this command:
 ```
 ansible all -m ping
@@ -72,11 +90,23 @@ web1 | SUCCESS => {
 }
 ```
 
-### Task 2: Deployment
+### Task 2: Encrypt your inventory file
+
+Now let's secure your own inventory file:
+
+```
+ansible-vault encrypt <your_file_name>
+```
+
+### Task 3: Deployment
 Now that everything is set up and tested, we can deploy our environments by runnning the following command:
 
 ```
-ansible-playbook playbooks/site.yml 
+ansible-playbook playbooks/site.yml --ask-vault-pass
+
+OR
+
+ansible-playbook playbooks/site.yml --vault-password-file <your_path_to_file> #if password stored in a file
 ```
 *<ins>NB.</ins>: use the --check option to lauch a Dry Run of the playbook*
 

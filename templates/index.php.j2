@@ -7,6 +7,7 @@
     <h1>Welcome to {{ inventory_hostname }}</h1>
     <p>Deploy date: {{ ansible_date_time.date }}</p>
     <p>Web server: {{ webserver_type | default('Apache') }}</p>
+    <p>Test jinja: {{ test_jinja | default('did not works') }}</p>
 
     <hr>
 

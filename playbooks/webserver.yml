@@ -1,6 +1,8 @@
 ---
 - name: System preparation # Start new play
   hosts: all # Play will run on all hosts defined in the inventory
+  #strategy: free # Here each server is independant from each other installation
+  #serial: 1 # Specify how many server we want to process at the same time
   become: true # Run the tasks with sudo/root
   #tasks:
   #  - include_tasks: ../tasks/deploy_web.yml

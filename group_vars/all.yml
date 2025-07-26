@@ -1,5 +1,6 @@
-mode:  0755
-owner: root
-group: root
+mode: 755
+owner: webadmin
+group: sudo
 conf_apache_path: /etc/apache2/sites-available/000-default.conf
 user: webadmin
+test_jinja: titi
