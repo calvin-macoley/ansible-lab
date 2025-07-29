@@ -1,6 +1,6 @@
 ---
 - name: Application deployment # Start new play
-  hosts: all # Play will run on all hosts defined in the inventory
+  hosts: webservers-us-east-1 # Play will run on all hosts defined in the inventory
   gather_facts: yes
   become: true # Run the tasks with sudo/root
   tasks:
